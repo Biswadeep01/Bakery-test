@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Golden Crumb | Artisan Bakery</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #740311;
+            --accent-gold: #edcd6c;
+            --deep-green: #195b13;
+            --light-cream: #f9f5e8;
+            --whatsapp-green: #25d366;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: #333;
+            overflow-x: hidden;
+            background-color: var(--light-cream);
+        }
+
+        /* --- WhatsApp Floating Button Styling --- */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-green);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            background-color: var(--deep-green); /* Changes to your brand green on hover */
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* --- Typography & Utilities --- */
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            color: var(--primary-red);
+        }
+        
+        .text-gold { color: var(--accent-gold) !important; }
+        .text-red { color: var(--primary-red) !important; }
+        .text-green { color: var(--deep-green) !important; }
+        .bg-red { background-color: var(--primary-red) !important; }
+        .bg-gold { background-color: var(--accent-gold) !important; }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .btn-custom {
+            background-color: var(--primary-red);
+            color: var(--accent-gold);
+            border: 2px solid var(--primary-red);
+            padding: 10px 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: transparent;
+            color: var(--primary-red);
+        }
+
+        /* --- Animations (Scroll Reveal) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease-out;
+        }
+        
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: var(--primary-red);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-family: var(--font-heading);
+            color: var(--accent-gold) !important;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-weight: 400;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-gold) !important;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1517433670267-08bbd4be890f?q=80&w=2080&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            color: var(--accent-gold);
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* --- Cards --- */
+        .product-card {
+            border: none;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-price {
+            color: var(--deep-green);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* --- Contact --- */
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #222;
+            color: #ccc;
+            padding: 50px 0 20px;
+        }
+        
+        footer h5 {
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        footer a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--accent-gold);
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+<body id="home">
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-bread-slice me-2"></i>Sera's Oven</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#cakes">Cakes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#merch">Merchandise</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container reveal">
+            <h1>Baked with Love</h1>
+            <p class="lead mb-4 fs-4">Experience the taste of luxury in every bite.</p>
+            <a href="#cakes" class="btn btn-custom btn-lg">View Menu</a>
+        </div>
+    </header>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 reveal-left">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2070&auto=format&fit=crop" alt="About Baker" class="img-fluid rounded shadow-lg">
+                </div>
+                <div class="col-md-6 mt-4 mt-md-0 reveal">
+                    <h2 class="display-5 fw-bold mb-4">Our Story</h2>
+                    <h4 class="text-gold mb-3">Tradition meets Elegance</h4>
+                    <p class="lead text-muted">Founded with a passion for pastry, Sera's Oven has been serving the community with premium artisan breads and confectionery since 2010.</p>
+                    <p>We believe in using only the finest ingredients—Belgian chocolate, organic flour, and farm-fresh fruits. Our recipes are a blend of classic European techniques and local flavors, creating a unique experience for your palate.</p>
+                    
+                    <div class="mt-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-leaf text-green me-3 fs-3"></i>
+                            <div><strong>Organic Ingredients</strong><br><small>Sourced from local farms</small></div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-heart text-red me-3 fs-3"></i>
+                            <div><strong>Handmade Daily</strong><br><small>Fresh from the oven</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cakes" class="section-padding" style="background-color: #fff;">
+        <div class="container">
+            <div class="text-center mb-5 reveal">
+                <h2>Signature Cakes</h2>
+                <div style="height: 3px; width: 60px; background: var(--accent-gold); margin: 10px auto;"></div>
+                <p class="text-muted">Perfect for weddings, birthdays, and celebrations.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1586788680434-30d324b2d46f?q=80&w=2151&auto=format&fit=crop" class="card-img-top" alt="Red Velvet">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Royal Red Velvet</h5>
+                            <p class="card-text text-muted small">Classic sponge with cream cheese frosting.</p>
+                            <p class="card-price">₹1200 / kg</p>
+                            <button class="btn btn-sm btn-outline-danger">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1989&auto=format&fit=crop" class="card-img-top" alt="Chocolate Truffle">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Dark Truffle Dream</h5>
+                            <p class="card-text text-muted small">70% Dark chocolate ganache layers.</p>
+                            <p class="card-price">₹1500 / kg</p>
+                            <button class="btn btn-sm btn-outline-danger">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1965&auto=format&fit=crop" class="card-img-top" alt="Fruit Gateau">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Berry Gold Gateau</h5>
+                            <p class="card-text text-muted small">Vanilla sponge with fresh seasonal berries.</p>
+                            <p class="card-price">₹1350 / kg</p>
+                            <button class="btn btn-sm btn-outline-danger">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="merch" class="section-padding bg-gold" style="background-color: #fcf8e8;">
+        <div class="container">
+            <div class="text-center mb-5 reveal">
+                <h2 class="text-red">Gift Hampers & Merch</h2>
+                <p>Take a piece of Sera's Oven home with you.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1621236378699-8597faf6a176?q=80&w=1974&auto=format&fit=crop" class="card-img-top" alt="Cookies">
+                        <div class="card-body text-center">
+                            <h5>Assorted Cookies</h5>
+                            <p class="card-price">₹450</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1583336137694-ade3658253dd?q=80&w=2070&auto=format&fit=crop" class="card-img-top" alt="Apron">
+                        <div class="card-body text-center">
+                            <h5>Baker's Apron</h5>
+                            <p class="card-price">₹800</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop" class="card-img-top" alt="Bread Basket">
+                        <div class="card-body text-center">
+                            <h5>Sourdough Kit</h5>
+                            <p class="card-price">₹1100</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=2070&auto=format&fit=crop" class="card-img-top" alt="Mug">
+                        <div class="card-body text-center">
+                            <h5>Gold Rim Mug</h5>
+                            <p class="card-price">₹350</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="row shadow-lg rounded overflow-hidden">
+                <div class="col-lg-7 p-5 bg-white reveal-left">
+                    <h2 class="mb-4">Get in Touch</h2>
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Your Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="Your Email">
+                            </div>
+                            <div class="col-12">
+                                <select class="form-select">
+                                    <option selected>Inquiry Type</option>
+                                    <option value="1">Wedding Order</option>
+                                    <option value="2">Corporate Event</option>
+                                    <option value="3">General Query</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="5" placeholder="Message"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-custom w-100">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-5 p-5 text-white d-flex flex-column justify-content-center reveal" style="background-color: var(--primary-red);">
+                    <h3>Contact Info</h3>
+                    <p class="mb-4 text-gold">We'd love to hear from you.</p>
+                    
+                    <div class="d-flex mb-4">
+                        <i class="fas fa-map-marker-alt fs-4 me-3 text-gold"></i>
+                        <p>123 Baker Street, Golden Lane,<br>Mumbai, Maharashtra 400001</p>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <i class="fas fa-phone fs-4 me-3 text-gold"></i>
+                        <p>+91 98765 43210</p>
+                    </div>
+                    <div class="d-flex">
+                        <i class="fas fa-envelope fs-4 me-3 text-gold"></i>
+                        <p>hello@serasoven.in</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Sera's Oven</h5>
+                    <p class="small">Crafting sweet memories since 2010. Visit us for the best cakes, pastries, and savory treats in town.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#cakes">Menu</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Locate Us</h5>
+                    <div class="ratio ratio-16x9 border border-secondary">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609823277!2d72.74109995709657!3d19.08219783958221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1689234567890!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center small">
+                © 2024 Sera's Oven. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210?text=Hello%20Sera's%20Oven,%20I%20have%20an%20enquiry%20regarding%20your%20products." 
+       class="whatsapp-float" 
+       target="_blank" 
+       title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Scroll Reveal Animation Script
+        window.addEventListener('scroll', reveal);
+
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal, .reveal-left');
+
+            for (var i = 0; i < reveals.length; i++) {
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+
+                if (revealtop < windowheight - revealpoint) {
+                    reveals[i].classList.add('active');
+                } else {
+                    reveals[i].classList.remove('active');
+                }
+            }
+        }
+        
+        reveal();
+        
+        const navLinks = document.querySelectorAll('.nav-link');
+        const menuToggle = document.getElementById('navbarNav');
+        const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle:false});
+        navLinks.forEach((l) => {
+            l.addEventListener('click', () => { if(menuToggle.classList.contains('show')) bsCollapse.toggle() })
+        });
+    </script>
+</body>
+</html>
